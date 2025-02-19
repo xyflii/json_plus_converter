@@ -30,6 +30,6 @@ jobs:
       with:
         token: ${{ secrets.SELF_TOKEN }}
         files:
-          ./target/debug/*.exe
+          ./target/debug/json_converter
         tag_name: ${{ steps.tag.outputs.tag }}
       
