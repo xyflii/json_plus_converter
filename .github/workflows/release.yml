@@ -20,15 +20,15 @@ jobs:
     - name: Build
       run: cargo build --release
     - name: Rename for Windows (Optional)
-      if: runner.os == 'Linux'  # 只在 Linux 上执行
+      if: runner.os == 'Linux'
       run: |
         cd target/release/
         for file in *; do
-          if [[ -f "$file" && ! "$file" =~ \.exe$ ]]; then
+          if [[ -f "$file" && -x "$file" && ! "$file" =~ \.exe$ ]]; then
             mv "$file" "$file.exe"
           fi
         done
-        ls -l # 检查重命名结果
+        ls -l
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
