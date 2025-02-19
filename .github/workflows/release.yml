@@ -24,6 +24,6 @@ jobs:
       with:
         token: ${{ secrets.SELF_TOKEN }}
         files:
-          ./target/debug/json_converter.exe
+          target/debug/json_converter.exe
         tag_name: ${{ steps.tag.outputs.tag }}
       
