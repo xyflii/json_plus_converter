@@ -19,6 +19,12 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Debug - List Files (Release) # 调试，确认文件
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "Files in target/debug/:"
+        ls -l target/debug/ || true
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
