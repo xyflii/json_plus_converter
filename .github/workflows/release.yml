@@ -15,21 +15,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build
-      run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
-    - name: Debug - List Files (Release) # 调试，确认文件
+    - name: Build
+      run: cargo build --release
+    - name: Rename for Windows (Optional)
+      if: runner.os == 'Linux'  # 只在 Linux 上执行
       run: |
-        echo "Current working directory:"
-        pwd
-        echo "Files in target/debug/:"
-        ls -l target/debug/ || true
+        cd target/release/
+        for file in *; do
+          if [[ -f "$file" && ! "$file" =~ \.exe$ ]]; then
+            mv "$file" "$file.exe"
+          fi
+        done
+        ls -l # 检查重命名结果
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
         token: ${{ secrets.SELF_TOKEN }}
         files:
-          ./target/debug/json_converter
+          ./target/release/*.exe
         tag_name: ${{ steps.tag.outputs.tag }}
       
